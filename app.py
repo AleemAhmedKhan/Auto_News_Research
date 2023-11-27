@@ -8,8 +8,6 @@ import requests
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 rapid_api_key = os.getenv("X-RapidAPI-Key")
-smart_light_api_key = os.getenv("SMART_LIGHT_API_KEY")
-
 airtable_api_key = os.getenv("AIRTABLE_API_KEY")
 table = Table(airtable_api_key, "appHojHIE4y8gVBgc", "tbldUUKZFngr78ogg")
 
@@ -58,20 +56,7 @@ function_descriptions = [
             }
         }
     },
-    {
-        "name": "control_light",
-        "description": "Turn on/off the light",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "state": {
-                    "type": "string",
-                    "description": "the state of the light, should be on or off",
-                    "enum": ["on", "off"]
-                }
-            }
-        }
-    }
+
 ]
 
 
@@ -110,22 +95,6 @@ def get_stock_movers():
     return response.json()
 
 
-def control_light(state):
-    token = smart_light_api_key
-
-    headers = {
-        "Authorization": f"Bearer {token}",
-    }
-
-    payload = {
-        "power": state,
-    }
-
-    response = requests.put('https://api.lifx.com/v1/lights/all/state', data=payload, headers=headers)
-
-    return response.json()
-
-
 def function_call(ai_response):
     function_call = ai_response["choices"][0]["message"]["function_call"]
     function_name = function_call["name"]
@@ -139,10 +108,6 @@ def function_call(ai_response):
         stock = eval(arguments).get("stock")
         news_summary = eval(arguments).get("news_summary")
         move = eval(arguments).get("move")
-        return add_stock_news_airtable(stock, move, news_summary)
-    elif function_name == "control_light":
-        state = eval(arguments).get("state")
-        return control_light(state)
     else:
         return
         
@@ -181,6 +146,6 @@ def ask_function_calling(query):
         print(response)
 
 
-user_query = "Turn on the light"
+user_query = "xxxxxxxxxxxxxx"
 
 ask_function_calling(user_query)
