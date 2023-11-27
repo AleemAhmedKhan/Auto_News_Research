@@ -13,7 +13,7 @@ Simplify your news research with precision! Access curated financial (or any oth
 4. Add news to Airtable
 
 *****
-![](images/Capture.PNG)
+![](images/Capture1.PNG)
 
 ## 🌐 How to run?
 ### STEPS:
